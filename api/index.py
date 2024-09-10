@@ -1,22 +1,19 @@
-from http.server import BaseHTTPRequestHandler
+BaseHTTPRequestHandler
 from urllib import parse
 
-class Handler(BaseHTTPRequestHandler):
-    def do_GET(self):
-        s = self.path
-        dic = dict(parse.parse_qsl(parse.urlsplit(s).query))
-        self.send_response(200)
-        self.send_header('Content-type', 'text/plain')
-        self.end_headers()
+class handler(BaseHTTPRequestHandler):
 
-        if "name" in dic:
-            message = "Hello, " + dic["name"] + "!"
-        else:
-            message = "Hello, stranger!"
+	def do_GET(self):
+		s = self.path
+		dic = dict(parse.parse_qsl(parse.urlsplit(s).query))
+		self.send_response(200)
+		self.send_header('Content-type','text/plain')
+		self.end_headers()
 
-        self.wfile.write(message.encode())
-        return
+		if "name" in dic:
+			message = "Hello, " + dic["name"] + "!"
+		else:
+			message = "Hello, stranger!"
 
-def handler(req, res):
-    req_handler = Handler(req, res)
-    req_handler.do_GET()
+		self.wfile.write(message.encode())
+		return
